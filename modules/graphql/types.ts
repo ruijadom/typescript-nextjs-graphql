@@ -10,7 +10,7 @@ export const testQuery = extendType({
           data: {
             email: "johndoe@gmail.com",
             username: "johndoe",
-            passhash: "1234",
+            passhash: "1234qwer",
           },
         });
         const users = await prisma.user.findMany();
