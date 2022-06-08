@@ -45,14 +45,20 @@ export const createAccount: FieldResolver<
 
     const transport = await getTransport();
     
-    transport.sendMail(generateVerificationEmail(credentials)).then(info => {
+    const mailOptions = generateVerificationEmail({
+      username: credentials.username,
+      email: credentials.email,
+      uuid: key
+    });
+
+    transport.sendMail(mailOptions).then(info => {
       console.log(`Message id: ${info.messageId}`);
       console.log(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
     });
     
     return {
       message:
-        "Thanks for registering! Check your email to validate your account.",
+        "Thanks for registering! Check your email for instruction for verify your account.",
       error: false,
     };
   } catch (err) {

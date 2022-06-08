@@ -1,4 +1,3 @@
-
 import Mail from "nodemailer/lib/mailer";
 
 interface EmailInput {
