@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Test App</title>
         <meta name="description" content="A Test Application" />
-        <link rel="icon" href="/favicon2.ico" />
+        <link rel="icon" href="/favicon.ico" />
         <meta charSet="utf-8" />
         <meta
           name="viewport"

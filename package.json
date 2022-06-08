@@ -49,7 +49,7 @@
     "@graphql-codegen/typescript-operations": "2.4.1"
   },
   "prisma": {
-    "schema": "modules/prisma/schema.prisma",
+    "schema": "src/modules/prisma/schema.prisma",
     "seed": "ts-node src/modules/prisma/seed.ts"
   }
 }
