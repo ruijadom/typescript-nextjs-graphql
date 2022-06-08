@@ -3,7 +3,7 @@ import Redis from "ioredis";
 let redisClient: Redis | null = null;
 
 if (!process.env.REDIS_HOST || !process.env.REDIS_PORT) {
-  console.warn("no REDIS_HOST or REDIS_POST env vars defined!");
+  console.warn("no REDIS_HOST or REDIS_PORT env vars defined!");
 }
 
 export const getRedisClient = (): Redis => {

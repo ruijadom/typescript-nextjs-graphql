@@ -58,7 +58,7 @@ export const createAccount: FieldResolver<
     
     return {
       message:
-        "Thanks for registering! Check your email for instruction for verify your account.",
+      "Thanks for registering! Check your email for instructions on how to verify your account.",
       error: false,
     };
   } catch (err) {
