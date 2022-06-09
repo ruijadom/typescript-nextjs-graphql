@@ -25,6 +25,7 @@ export const loginAttempt: FieldResolver<
     domain: process.env.SERVER_DOMAIN || undefined,
     maxAge: 60 * 5,
     sameSite: true,
+    path: "/",
   } as CookieSerializeOptions);
 
   return {
