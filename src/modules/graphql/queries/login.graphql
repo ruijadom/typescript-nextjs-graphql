@@ -1,5 +1,5 @@
 query Test {
-  test(bool: true)
+  test(bool: false)
 }
 
 mutation RegisterAccount($credentials: loginCredentials!) {
@@ -10,6 +10,13 @@ mutation RegisterAccount($credentials: loginCredentials!) {
 
 mutation Login($credentials: loginCredentials!) {
   login(credentials: $credentials) {
+    username
+  }
+}
+
+query ImplicitLogin {
+  implicitLogin {
+    loggedIn
     username
   }
 }

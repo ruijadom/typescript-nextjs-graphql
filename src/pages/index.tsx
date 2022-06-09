@@ -1,36 +1,54 @@
-import type { GetServerSidePropsContext, NextPage } from "next";
-import { TestDocument, useTestQuery } from "../../generated/graphql";
+import { Heading } from "@chakra-ui/react";
+import type { GetServerSidePropsContext } from "next";
+import nookies from "nookies";
 import {
-  addApolloState,
-  initializeApollo
-} from "../lib/apolloClient";
+  ImplicitLoginDocument,
+  ImplicitLoginQuery
+} from "../../generated/graphql";
+import { initializeApollo } from "../lib/apolloClient";
 import { prisma } from "../lib/prisma";
 import Register from "../modules/components/login/Register";
 
-const Home: NextPage = () => {
-  const { data } = useTestQuery({
-    notifyOnNetworkStatusChange: true,
-  });
+interface Props {
+  username: string;
+  loggedIn: boolean;
+}
 
-  return (
-    <>
-      <div>{JSON.stringify(data?.test)}</div>
-      <Register />
-    </>
+const Home = ({ loggedIn, username }: Props) => {
+  return loggedIn ? (
+    <Heading>Welcome {username}</Heading>
+  ) : (
+    <Register />
   );
 };
 
 export const getServerSideProps = async ({
   req,
-  res
+  res,
 }: GetServerSidePropsContext) => {
-  const apolloClient = initializeApollo({ ctx: { req, res, prisma } });
+  const cookies = nookies.get({ req });
+  if (!cookies.sid) {
+    return { props: { loggedIn: false } as Props };
+  }
 
-  await apolloClient.query({ query: TestDocument });
-
-  return addApolloState(apolloClient, {
-    props: {},
+  const apolloClient = initializeApollo({
+    ctx: { req, res, prisma },
   });
+
+  const { data } = await apolloClient.query<ImplicitLoginQuery>({
+    query: ImplicitLoginDocument,
+  });
+
+  if (!data.implicitLogin?.loggedIn) {
+    return { props: { loggedIn: false } as Props };
+  }
+
+  return {
+    props: {
+      username: data?.implicitLogin?.username,
+      loggedIn: data?.implicitLogin?.loggedIn,
+    } as Props,
+  };
 };
 
 export default Home;
